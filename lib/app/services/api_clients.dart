@@ -1,5 +1,5 @@
 import 'dart:developer';
-import '../app/data/models/network_response.dart';
+import '../data/models/network_response.dart';
 import 'package:http/http.dart' as http;
 
 class ApiClient {

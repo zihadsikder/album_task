@@ -15,6 +15,7 @@ class PhotoController extends GetxController {
 
   final isLoading = false.obs;
   final photosList = <Photo>[].obs;
+  final filteredPhotosList = <Photo>[].obs;
 
   @override
   void onInit() {
@@ -24,10 +25,16 @@ class PhotoController extends GetxController {
 
   Future<void> getPhotos() async {
     isLoading.value = true;
-    final NetworkResponse response = await AlbumsRepository.getPhotos(albumId);
+    final NetworkResponse response = await AlbumsRepository.getPhotos();
     if (response.isSuccess) {
       photosList.value = photoFromJson(response.jsonResponse!);
+      filterById(albumId);
     }
     isLoading.value = false;
+  }
+
+  void filterById(int id) {
+    filteredPhotosList.value =
+        photosList.where((photo) => photo.albumId == id).toList();
   }
 }

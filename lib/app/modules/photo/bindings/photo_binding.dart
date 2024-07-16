@@ -10,7 +10,7 @@ class PhotoBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<PhotoController>(
-          () => PhotoController(albumId),
+      () => PhotoController(albumId),
     );
   }
 }

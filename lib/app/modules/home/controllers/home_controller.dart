@@ -28,9 +28,13 @@ class HomeController extends GetxController {
     if (searchQuery.value.isEmpty) {
       return albumsList;
     } else {
-      return albumsList.where((album) =>
-      album.title?.toLowerCase().contains(searchQuery.value.toLowerCase()) ?? false
-      ).toList();
+      return albumsList
+          .where((album) =>
+              album.title
+                  ?.toLowerCase()
+                  .contains(searchQuery.value.toLowerCase()) ??
+              false)
+          .toList();
     }
   }
 

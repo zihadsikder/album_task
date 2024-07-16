@@ -21,8 +21,8 @@ class AppPages {
     GetPage(
       name: _Paths.PHOTO,
       page: () {
-        final albumId = Get.parameters['albumId']!;
-        return PhotoView(albumId: int.parse(albumId));
+        final albumId = int.parse(Get.parameters['albumId']!);
+        return PhotoView(albumId: albumId);
       },
       binding: BindingsBuilder(() {
         final albumId = int.parse(Get.parameters['albumId']!);

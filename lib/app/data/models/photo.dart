@@ -1,12 +1,10 @@
-// To parse this JSON data, do
-//
-//     final photo = photoFromJson(jsonString);
-
 import 'dart:convert';
 
-List<Photo> photoFromJson(String str) => List<Photo>.from(json.decode(str).map((x) => Photo.fromJson(x)));
+List<Photo> photoFromJson(String str) =>
+    List<Photo>.from(json.decode(str).map((x) => Photo.fromJson(x)));
 
-String photoToJson(List<Photo> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String photoToJson(List<Photo> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Photo {
   final int? albumId;
@@ -24,18 +22,18 @@ class Photo {
   });
 
   factory Photo.fromJson(Map<String, dynamic> json) => Photo(
-    albumId: json["albumId"],
-    id: json["id"],
-    title: json["title"],
-    url: json["url"],
-    thumbnailUrl: json["thumbnailUrl"],
-  );
+        albumId: json["albumId"],
+        id: json["id"],
+        title: json["title"],
+        url: json["url"],
+        thumbnailUrl: json["thumbnailUrl"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "albumId": albumId,
-    "id": id,
-    "title": title,
-    "url": url,
-    "thumbnailUrl": thumbnailUrl,
-  };
+        "albumId": albumId,
+        "id": id,
+        "title": title,
+        "url": url,
+        "thumbnailUrl": thumbnailUrl,
+      };
 }
