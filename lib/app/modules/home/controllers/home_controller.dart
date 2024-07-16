@@ -1,23 +1,40 @@
 import 'package:get/get.dart';
+import 'package:task/app/data/models/album.dart';
+import 'package:task/app/data/repositories/albums_repository.dart';
+
+import '../../../data/models/network_response.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
+  final isLoading = false.obs;
+  final albumsList = <Album>[].obs;
+  final searchQuery = ''.obs;
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
+    getAlbums();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  Future<void> getAlbums() async {
+    isLoading.value = true;
+    final NetworkResponse response = await AlbumsRepository.getAlbums();
+    if (response.isSuccess) {
+      albumsList.value = albumFromJson(response.jsonResponse!);
+    }
+    isLoading.value = false;
   }
 
-  @override
-  void onClose() {
-    super.onClose();
+  List<Album> get filteredAlbums {
+    if (searchQuery.value.isEmpty) {
+      return albumsList;
+    } else {
+      return albumsList.where((album) =>
+      album.title?.toLowerCase().contains(searchQuery.value.toLowerCase()) ?? false
+      ).toList();
+    }
   }
 
-  void increment() => count.value++;
+  void searchAlbums(String query) {
+    searchQuery.value = query;
+  }
 }
