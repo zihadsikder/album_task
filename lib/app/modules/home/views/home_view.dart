@@ -10,6 +10,16 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    final ScrollController _scrollController = ScrollController();
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+        if (controller.hasMoreData) {
+          controller.getAlbums(loadMore: false);
+        }
+      }
+    });
+
     return Scaffold(
       backgroundColor: AppColors.screenBgColor,
       appBar: AppBar(
@@ -23,17 +33,25 @@ class HomeView extends GetView<HomeController> {
           ),
           Expanded(
             child: Obx(() {
-              if (controller.isLoading.value) {
+              if (controller.isLoading.value && controller.albumsList.isEmpty) {
                 return Center(
                     child: CircularProgressIndicator(
-                  color: AppColors.primaryColor,
-                ));
+                      color: AppColors.primaryColor,
+                    ));
               } else if (controller.albumsList.isEmpty) {
                 return const Center(child: Text('No albums found'));
               } else {
                 return ListView.builder(
-                  itemCount: controller.filteredAlbums.length,
+                  controller: _scrollController,
+                  itemCount: controller.filteredAlbums.length + (controller.hasMoreData ? 1 : 10),
                   itemBuilder: (context, index) {
+                    if (index == controller.filteredAlbums.length) {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.primaryColor,
+                        ),
+                      );
+                    }
                     final album = controller.filteredAlbums[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(

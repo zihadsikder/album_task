@@ -3,7 +3,8 @@ import '../data/models/network_response.dart';
 import 'package:http/http.dart' as http;
 
 class ApiClient {
-  Future<NetworkResponse> getRequest(String url, {String? token}) async {
+  Future<NetworkResponse> getRequest(String url,
+      {String? token, required Map<String, String> queryParameters}) async {
     try {
       log(url);
       log(token.toString());
